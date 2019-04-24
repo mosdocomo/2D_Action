@@ -9,11 +9,20 @@ namespace TouchSystemManager
         // 画面がタッチされているか判定
         public bool touchFlag { set; get; }
         
-        // タッチされた情報の配列
+        // タッチ時のポジション
         public Vector2 touchPosition { set; get; }
 
         // タッチフェーズの状態
         public TouchPhase nowTouchPhase { set; get; }
+
+        // タッチ開始時のポジション
+        public Vector2 startTouchPosition { set; get; }
+
+        // タッチ終了時のポジション
+        public Vector2 endTouchPosition { set; get; }
+
+        // タッチ開始時からの経過時間
+        public float beganTime { set; get; }
     }
 }
 

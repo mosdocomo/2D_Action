@@ -46,18 +46,24 @@ namespace TouchSystemManager
                     touchManagerPropertys[0].touchFlag = true;
                     touchManagerPropertys[0].nowTouchPhase = TouchPhase.Began;
                     touchManagerPropertys[0].touchPosition = Input.mousePosition;
+                    touchManagerPropertys[0].startTouchPosition = Input.mousePosition;
+                    touchManagerPropertys[0].beganTime = 0.0f;
                 }
                 else if (Input.GetMouseButtonUp(0))
                 {
                     touchManagerPropertys[0].touchFlag = true;
                     touchManagerPropertys[0].nowTouchPhase = TouchPhase.Ended;
                     touchManagerPropertys[0].touchPosition = Input.mousePosition;
+                    touchManagerPropertys[0].endTouchPosition = Input.mousePosition;
+                    touchManagerPropertys[0].beganTime = Time.deltaTime;
                 }
                 else if (Input.GetMouseButton(0))
                 {
                     touchManagerPropertys[0].touchFlag = true;
                     touchManagerPropertys[0].nowTouchPhase = TouchPhase.Moved;
                     touchManagerPropertys[0].touchPosition = Input.mousePosition;
+                    touchManagerPropertys[0].endTouchPosition = Input.mousePosition;
+                    touchManagerPropertys[0].beganTime = Time.deltaTime;
                 }
             }
             else
@@ -74,6 +80,28 @@ namespace TouchSystemManager
                             touchManagerPropertys[i].touchPosition = touches[i].position;
                             touchManagerPropertys[i].nowTouchPhase = touches[i].phase;
 
+                            switch (touchManagerPropertys[i].nowTouchPhase)
+                            {
+                                case TouchPhase.Began:
+                                    touchManagerPropertys[i].startTouchPosition = Input.mousePosition;
+                                    touchManagerPropertys[i].beganTime = 0.0f;
+                                    break;
+
+                                case TouchPhase.Moved:
+                                    touchManagerPropertys[i].endTouchPosition = Input.mousePosition;
+                                    touchManagerPropertys[i].beganTime = Time.deltaTime;
+                                    break;
+
+                                case TouchPhase.Ended:
+                                    touchManagerPropertys[i].endTouchPosition = Input.mousePosition;
+                                    touchManagerPropertys[i].beganTime = Time.deltaTime;
+                                    break;
+
+                                case TouchPhase.Stationary:
+                                    touchManagerPropertys[i].endTouchPosition = Input.mousePosition;
+                                    touchManagerPropertys[i].beganTime = Time.deltaTime;
+                                    break;
+                            }
                         }
                         // １番最初のタッチが離れて、２番目のタッチが存在する場合
                         if (touches[0].phase == TouchPhase.Ended && Input.touchCount >= 2)
@@ -89,6 +117,30 @@ namespace TouchSystemManager
                             touchManagerPropertys[j].touchFlag = true;
                             touchManagerPropertys[j].touchPosition = touches[i].position;
                             touchManagerPropertys[j].nowTouchPhase = touches[i].phase;
+
+                            switch (touchManagerPropertys[j].nowTouchPhase)
+                            {
+                                case TouchPhase.Began:
+                                    touchManagerPropertys[j].startTouchPosition = Input.mousePosition;
+                                    touchManagerPropertys[j].beganTime = 0.0f;
+                                    break;
+
+                                case TouchPhase.Moved:
+                                    touchManagerPropertys[j].endTouchPosition = Input.mousePosition;
+                                    touchManagerPropertys[j].beganTime = Time.deltaTime;
+                                    break;
+
+                                case TouchPhase.Ended:
+                                    touchManagerPropertys[j].endTouchPosition = Input.mousePosition;
+                                    touchManagerPropertys[j].beganTime = Time.deltaTime;
+                                    break;
+
+                                case TouchPhase.Stationary:
+                                    touchManagerPropertys[j].endTouchPosition = Input.mousePosition;
+                                    touchManagerPropertys[j].beganTime = Time.deltaTime;
+                                    break;
+                            }
+
                             j--;
                         }
                     }
