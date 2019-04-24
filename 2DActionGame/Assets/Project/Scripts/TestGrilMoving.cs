@@ -38,7 +38,7 @@ public class TestGrilMoving : MonoBehaviour
                 }
                 else if (touchPropertys[i].nowTouchPhase == TouchPhase.Ended)
                 {
-                    //playerMoving = false;
+                    
                 }
             }
         }
@@ -61,7 +61,7 @@ public class TestGrilMoving : MonoBehaviour
             else if (touchPropertys[i].nowTouchPhase == TouchPhase.Ended && playerMoving)
             {
                 this.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                Debug.Log("マウスはなす");
+                playerMoving = false;
             }
         }
     }

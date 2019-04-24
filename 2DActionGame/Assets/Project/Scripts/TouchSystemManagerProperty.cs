@@ -8,9 +8,6 @@ namespace TouchSystemManager
     {
         // 画面がタッチされているか判定
         public bool touchFlag { set; get; }
-        
-        // タッチ時のポジション
-        public Vector2 touchPosition { set; get; }
 
         // タッチフェーズの状態
         public TouchPhase nowTouchPhase { set; get; }

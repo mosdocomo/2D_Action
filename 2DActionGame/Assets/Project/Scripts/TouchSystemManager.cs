@@ -21,8 +21,8 @@ namespace TouchSystemManager
         {
             touchManagerPropertys = new TouchSystemManagerProperty[maxTouches]
             {
-                new TouchSystemManagerProperty{touchFlag = false, touchPosition = Vector2.zero, nowTouchPhase = TouchPhase.Began },
-                new TouchSystemManagerProperty{touchFlag = false, touchPosition = Vector2.zero, nowTouchPhase = TouchPhase.Began }
+                new TouchSystemManagerProperty{touchFlag = false, nowTouchPhase = TouchPhase.Began ,startTouchPosition = Vector2.zero, endTouchPosition = Vector2.zero,beganTime = 0.0f},
+                new TouchSystemManagerProperty{touchFlag = false, nowTouchPhase = TouchPhase.Began ,startTouchPosition = Vector2.zero, endTouchPosition = Vector2.zero,beganTime = 0.0f},
             };
             Debug.Log(touchManagerPropertys[0].touchFlag);
         }
@@ -45,7 +45,6 @@ namespace TouchSystemManager
                 {
                     touchManagerPropertys[0].touchFlag = true;
                     touchManagerPropertys[0].nowTouchPhase = TouchPhase.Began;
-                    touchManagerPropertys[0].touchPosition = Input.mousePosition;
                     touchManagerPropertys[0].startTouchPosition = Input.mousePosition;
                     touchManagerPropertys[0].beganTime = 0.0f;
                 }
@@ -53,7 +52,6 @@ namespace TouchSystemManager
                 {
                     touchManagerPropertys[0].touchFlag = true;
                     touchManagerPropertys[0].nowTouchPhase = TouchPhase.Ended;
-                    touchManagerPropertys[0].touchPosition = Input.mousePosition;
                     touchManagerPropertys[0].endTouchPosition = Input.mousePosition;
                     touchManagerPropertys[0].beganTime = Time.deltaTime;
                 }
@@ -61,13 +59,16 @@ namespace TouchSystemManager
                 {
                     touchManagerPropertys[0].touchFlag = true;
                     touchManagerPropertys[0].nowTouchPhase = TouchPhase.Moved;
-                    touchManagerPropertys[0].touchPosition = Input.mousePosition;
                     touchManagerPropertys[0].endTouchPosition = Input.mousePosition;
                     touchManagerPropertys[0].beganTime = Time.deltaTime;
                 }
             }
             else
             {
+                for (var i = 0; i < maxTouches; i++)
+                {
+                    touchManagerPropertys[i].touchFlag = false;
+                }
                 // 実機処理
                 if (Input.touchCount > 0)
                 {
@@ -77,7 +78,6 @@ namespace TouchSystemManager
                         for (var i = 0; i < maxTouches; i++)
                         {
                             touchManagerPropertys[i].touchFlag = true;
-                            touchManagerPropertys[i].touchPosition = touches[i].position;
                             touchManagerPropertys[i].nowTouchPhase = touches[i].phase;
 
                             switch (touchManagerPropertys[i].nowTouchPhase)
@@ -115,7 +115,6 @@ namespace TouchSystemManager
                         for (var i = 0; i < maxTouches; i++)
                         {
                             touchManagerPropertys[j].touchFlag = true;
-                            touchManagerPropertys[j].touchPosition = touches[i].position;
                             touchManagerPropertys[j].nowTouchPhase = touches[i].phase;
 
                             switch (touchManagerPropertys[j].nowTouchPhase)
